@@ -41,6 +41,10 @@ import whisk.core.entity.types.EntityStore
 import whisk.http.ErrorResponse.terminate
 import whisk.core.entity.WhiskEntityQueries.listEntitiesInNamespace
 
+/**
+ * A singleton object which defines the properties that must be present in a configuration
+ * in order to implement the namespaces API.
+ */
 object WhiskNamespacesApi {
     def requiredProperties = WhiskEntityStore.requiredProperties
 

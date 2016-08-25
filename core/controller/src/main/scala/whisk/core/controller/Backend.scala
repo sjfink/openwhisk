@@ -31,10 +31,10 @@ import whisk.core.connector.LoadbalancerRequest
 import whisk.core.connector.ActivationMessage
 import whisk.core.WhiskConfig
 import whisk.core.entitlement.EntitlementService
-import whisk.core.entitlement.LocalEntitlementService
+import whisk.core.entitlement.LocalEntitlement
 import whisk.core.entitlement.RemoteEntitlementService
 import whisk.core.entity.{ ActivationId, WhiskActivation }
-import whisk.core.loadBalancer.LoadBalancerService
+import whisk.core.loadBalancer.LoadBalancer
 import scala.language.postfixOps
 
 object WhiskServices extends LoadbalancerRequest {
@@ -55,7 +55,7 @@ object WhiskServices extends LoadbalancerRequest {
         // remote entitlement service requires a host:port definition. If not given,
         // i.e., the value equals ":" or ":xxxx", use a local entitlement flow.
         if (config.entitlementHost.startsWith(":")) {
-            new LocalEntitlementService(config)
+            new LocalEntitlement(config)
         } else {
             new RemoteEntitlementService(config, timeout)
         }
@@ -71,7 +71,7 @@ object WhiskServices extends LoadbalancerRequest {
      */
     def makeLoadBalancerComponent(config: WhiskConfig, timeout: Timeout = 10 seconds)(
         implicit as: ActorSystem): (LoadBalancerReq => Future[LoadBalancerResponse], () => JsObject, (ActivationId, TransactionId) => Future[WhiskActivation]) = {
-        val loadBalancer = new LoadBalancerService(config, InfoLevel)
+        val loadBalancer = new LoadBalancer(config, InfoLevel)
         val requestTaker = (lbr: LoadBalancerReq) => { loadBalancer.doPublish(lbr._1, lbr._2)(lbr._3) }
         (requestTaker, loadBalancer.getInvokerHealth, loadBalancer.queryActivationResponse)
     }

@@ -46,7 +46,11 @@ import whisk.core.entity.WhiskActivation
 import whisk.utils.ExecutionContextFactory.PromiseExtensions
 import akka.event.Logging.LogLevel
 
-class LoadBalancerService(config: WhiskConfig, verbosity: LogLevel)(
+/**
+ * The LoadBalancer dispatches invoke requests to the various invokers via Kafka.
+ * Each invoker owns it's own topic in Kafka.
+ */
+class LoadBalancer(config: WhiskConfig, verbosity: LogLevel)(
     implicit val actorSystem: ActorSystem)
     extends LoadBalancerToKafka
     with Logging {
@@ -147,7 +151,7 @@ class LoadBalancerService(config: WhiskConfig, verbosity: LogLevel)(
 
 }
 
-object LoadBalancerService {
+object LoadBalancer {
     def requiredProperties = kafkaHost ++
         consulServer ++
         InvokerHealth.requiredProperties

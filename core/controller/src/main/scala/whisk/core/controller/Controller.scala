@@ -21,7 +21,7 @@ import akka.actor.ActorSystem
 import akka.japi.Creator
 import spray.routing.Directive.pimpApply
 import whisk.common.TransactionId
-import whisk.core.loadBalancer.LoadBalancerService
+import whisk.core.loadBalancer.LoadBalancer
 import whisk.core.WhiskConfig
 import whisk.http.BasicHttpService
 import whisk.http.BasicRasService
@@ -89,7 +89,7 @@ object Controller {
     // no default value specified, so it must appear in the properties file
     def requiredProperties = Map(WhiskConfig.servicePort -> 8080.toString) ++
         RestAPIVersion_v1.requiredProperties ++
-        LoadBalancerService.requiredProperties ++
+        LoadBalancer.requiredProperties ++
         EntitlementService.requiredProperties
 
     // akka-style factory to create a Controller object

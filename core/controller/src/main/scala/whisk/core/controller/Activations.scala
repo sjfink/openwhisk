@@ -43,6 +43,10 @@ import whisk.core.entitlement.Resource
 import whisk.core.entity.WhiskAuth
 import scala.language.postfixOps
 
+/**
+ * A singleton object which defines the properties that must be present in a configuration
+ * in order to implement the activations API.
+ */
 object WhiskActivationsApi {
     def requiredProperties = WhiskActivationStore.requiredProperties
 }

@@ -31,6 +31,9 @@ import whisk.core.connector.LoadBalancerResponse
 import akka.event.Logging.LogLevel
 import whisk.common.ConsulKV.LoadBalancerKeys
 
+/**
+ * Methods which implement the interface between the LoadBalancer and kafka
+ */
 trait LoadBalancerToKafka extends Logging {
 
     /** Gets a producer which can publish messages to the kafka bus. */

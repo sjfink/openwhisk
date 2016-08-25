@@ -52,6 +52,10 @@ import whisk.core.entity.types.EntityStore
 import whisk.http.ErrorResponse.terminate
 import whisk.core.entity.WhiskAuth
 
+/**
+ * A singleton object which defines the properties that must be present in a configuration
+ * in order to implement the packages API.
+ */
 object WhiskPackagesApi {
     def requiredProperties = WhiskEntityStore.requiredProperties
 }

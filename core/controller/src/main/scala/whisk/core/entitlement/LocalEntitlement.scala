@@ -25,19 +25,19 @@ import whisk.common.TransactionId
 import whisk.core.entity.Subject
 import whisk.core.WhiskConfig
 
-private object LocalEntitlementService {
+private object LocalEntitlement {
     /** Poor mans entitlement matrix. Must persist to datastore eventually. */
     private val matrix = TrieMap[(Subject, String), Set[Privilege]]()
 }
 
-protected[core] class LocalEntitlementService(
+protected[core] class LocalEntitlement(
     private val config: WhiskConfig)(
         implicit actorSystem: ActorSystem)
     extends EntitlementService(config) {
 
     private implicit val executionContext = actorSystem.dispatcher
 
-    private val matrix = LocalEntitlementService.matrix
+    private val matrix = LocalEntitlement.matrix
 
     /** Grants subject right to resource by adding them to the entitlement matrix. */
     protected[core] override def grant(subject: Subject, right: Privilege, resource: Resource)(implicit transid: TransactionId) = Future {
